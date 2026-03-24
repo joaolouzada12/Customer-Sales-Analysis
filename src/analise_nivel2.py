@@ -12,6 +12,10 @@ df_vendas_completas = df_vendas_clientes.merge(df_produtos, on='id_produto')
 # Criação de métricas
 df_vendas_completas['total'] = df_vendas_completas['preco'] * df_vendas_completas['quantidade']
 
+# Limpeza e preparação dos dados
+df_vendas_completas['data'] = pd.to_datetime(df_vendas_completas['data'])
+df_vendas_completas['mes'] = df_vendas_completas['data'].dt.month
+
 # Análises
 df_faturamento_categoria = (
     df_vendas_completas.groupby('categoria')['total']
@@ -52,6 +56,28 @@ df_ticket_cidade['ticket_medio'] = (
 
 df_ticket_cidade = df_ticket_cidade.sort_values('ticket_medio', ascending=False)
 
+# Análise temporal
+df_faturamento_mes = df_vendas_completas.groupby('mes')['total'].sum().sort_index()
+df_vendas_mes = df_vendas_completas.groupby('mes')['total'].count().sort_index()
+
+# Preparar dataframes mensais (CORREÇÃO AQUI)
+df_faturamento_mes = df_faturamento_mes.reset_index()
+df_vendas_mes = df_vendas_mes.reset_index()
+
+# Ajuste de nomes
+df_faturamento_mes = df_faturamento_mes.rename(columns={'total': 'faturamento'})
+df_vendas_mes = df_vendas_mes.rename(columns={'total': 'qtd_vendas'})
+
+# Merge das análises mensais
+df_faturamento_vendas = df_faturamento_mes.merge(df_vendas_mes, on='mes')
+
+df_faturamento_vendas['ticket_medio'] = (
+    df_faturamento_vendas['faturamento'] / df_faturamento_vendas['qtd_vendas']
+)
+
+df_faturamento_vendas['ticket_medio'] = df_faturamento_vendas['ticket_medio'].round(2)
+df_faturamento_vendas = df_faturamento_vendas.sort_values('faturamento', ascending=False)
+
 # Exibição dos resultados
 print('Faturamento por categoria:')
 print(df_faturamento_categoria.head())
@@ -61,6 +87,15 @@ print(df_faturamento_cidade.head())
 
 print('\nTop produto por cidade:')
 print(df_top_produto_cidade)
+
+print('\nFaturamento por mês:')
+print(df_faturamento_mes)
+
+print('\nVendas por mês:')
+print(df_vendas_mes)
+
+print('\nFaturamento vs Vendas por mês:')
+print(df_faturamento_vendas)
 
 print('\nTicket médio por cidade:')
 print(df_ticket_cidade)
@@ -78,3 +113,6 @@ df_faturamento_cidade.to_csv('data/processed/faturamento_cidade.csv', index=Fals
 df_quantidade_produto_cidade.to_csv('data/processed/quantidade_produto_cidade.csv', index=False)
 df_top_produto_cidade.to_csv('data/processed/top_produto_cidade.csv', index=False)
 df_ticket_cidade.to_csv('data/processed/ticket_cidade.csv', index=False)
+df_faturamento_mes.to_csv('data/processed/faturamento_mes.csv', index=False)
+df_vendas_mes.to_csv('data/processed/vendas_mes.csv', index=False)
+df_faturamento_vendas.to_csv('data/processed/analise_mensal.csv', index=False)

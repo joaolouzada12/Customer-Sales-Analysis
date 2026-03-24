@@ -30,14 +30,16 @@ After merging the datasets and creating the `total` column, the following analys
 - Revenue by city  
 - Quantity of products sold by city  
 - Top-selling product per city  
-- Average ticket (ticket médio) per city  
+- Average ticket per city  
 
-Business questions answered:
+### Time-based Analysis
 
-- Where is the company making more money?
-- Which cities generate more revenue?
-- What products perform best in each region?
-- Which locations have higher customer spending per purchase?
+- Revenue per month  
+- Number of sales per month  
+- Monthly comparison between revenue and sales volume  
+- Average ticket per month  
+
+These analyses allow deeper business insights such as identifying peak sales periods, understanding customer behavior over time, and comparing volume vs revenue performance.
 
 ## Technologies
 
@@ -46,6 +48,7 @@ Business questions answered:
 
 ## Project Structure
 
+```plaintext
 data/
   raw/
     clients.csv
@@ -58,27 +61,10 @@ data/
     quantidade_produto_cidade.csv
     top_produto_cidade.csv
     ticket_cidade.csv
+    faturamento_mes.csv
+    vendas_mes.csv
+    analise_mensal.csv
 
 src/
   gerar_dados_nivel2.py
-  analise.py
-
-## Key Learnings
-
-- Working with relational datasets using IDs  
-- Performing joins with Pandas (`merge`)  
-- Creating business metrics (revenue, ticket average)  
-- Using `groupby` for analytical insights  
-- Extracting top values within grouped data  
-- Structuring a clean and readable data analysis pipeline  
-- Exporting processed data for further use  
-
-## Status
-
-In progress.
-
-Next steps:
-
-- Add time-based analysis (monthly revenue, trends)
-- Create visualizations (Matplotlib)
-- Improve project documentation and storytelling
+  analise_nivel2.py
