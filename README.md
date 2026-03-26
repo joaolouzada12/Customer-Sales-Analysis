@@ -6,13 +6,17 @@ The dataset is simulated and structured in a relational format, requiring joins 
 
 ## Project Overview
 
+This project simulates a real-world data analysis workflow using relational datasets.
+
 The data is organized into three main tables:
 
-- clients
-- products
-- sales
+* clients
+* products
+* sales
 
-The goal of this project is to simulate a real data workflow, where datasets must be combined and transformed before extracting insights.
+The objective is to transform raw transactional data into meaningful business insights through data processing, aggregation, and analysis.
+
+---
 
 ## Data Pipeline
 
@@ -22,29 +26,57 @@ The goal of this project is to simulate a real data workflow, where datasets mus
 4. Data analysis (groupby operations)
 5. Data export (processed outputs)
 
+---
+
 ## Analysis Performed
 
 After merging the datasets and creating the `total` column, the following analyses were performed:
 
-- Revenue by category  
-- Revenue by city  
-- Quantity of products sold by city  
-- Top-selling product per city  
-- Average ticket per city  
+* Revenue by category
+* Revenue by city
+* Quantity of products sold by city
+* Top-selling product per city
+* Average ticket per city
 
 ### Time-based Analysis
 
-- Revenue per month  
-- Number of sales per month  
-- Monthly comparison between revenue and sales volume  
-- Average ticket per month  
+* Revenue per month
+* Number of sales per month
+* Monthly comparison between revenue and sales volume
+* Average ticket per month
 
-These analyses allow deeper business insights such as identifying peak sales periods, understanding customer behavior over time, and comparing volume vs revenue performance.
+These analyses provide a clear view of sales performance across different dimensions, including geography, product categories, and time.
 
-## Technologies
+---
+### Data Visualization
 
-- Python
-- Pandas
+To better understand the patterns in the data, visualizations were created using Seaborn and Matplotlib:
+
+* Bar chart: Revenue by category
+* Line chart: Revenue over time
+* Line chart: Number of sales over time
+* Combined line chart: Revenue vs number of sales (dual-axis)
+
+These visualizations help highlight trends, compare performance across dimensions, and support more accurate business interpretations.
+
+## Key Insights
+
+* The analysis shows that revenue distribution varies significantly across categories, indicating differences in product value and demand.
+* Some cities generate higher revenue not necessarily due to volume, but due to higher average ticket size.
+* Revenue and number of sales do not always grow together, highlighting variations in customer purchasing behavior.
+* Certain months show higher revenue even with fewer sales, suggesting higher-value transactions during those periods.
+
+These findings demonstrate how combining multiple datasets can uncover patterns in customer behavior and business performance.
+
+---
+
+## Technologies & Tools
+
+* Python
+* Pandas
+* CSV (data storage)
+
+---
 
 ## Project Structure
 
@@ -68,3 +100,4 @@ data/
 src/
   gerar_dados_nivel2.py
   analise_nivel2.py
+```
